@@ -33,7 +33,7 @@ namespace LiteDbExplorer.Core
 
             var connectionString = options.GetConnectionString();
 
-            LiteDatabase = new LiteDatabase(connectionString, log: GetLogger());
+            LiteDatabase = new LiteDatabase(connectionString);
 
             UpdateCollections();
 
@@ -50,8 +50,8 @@ namespace LiteDbExplorer.Core
 
         public int UserVersion
         {
-            get => LiteDatabase.Engine.UserVersion;
-            set => LiteDatabase.Engine.UserVersion = (ushort) value;
+            get => LiteDatabase.UserVersion;
+            set => LiteDatabase.UserVersion = (ushort) value;
         }
 
         public ObservableCollection<CollectionReferenceLookup> CollectionsLookup { get; private set; }
@@ -159,22 +159,23 @@ namespace LiteDbExplorer.Core
 
         public long ShrinkDatabase()
         {
-            return LiteDatabase.Shrink();
+            throw new NotImplementedException();
         }
 
         public long ShrinkDatabase(string password)
         {
-            return LiteDatabase.Shrink(password);
+            throw new NotImplementedException();
         }
 
         public IList<BsonValue> RunCommand(string command)
         {
-            return LiteDatabase.Engine.Run(command);
+            return LiteDatabase.Execute(command).ToList();
         }
 
         public BsonDocument InternalDatabaseInfo()
         {
-            return LiteDatabase.Engine.Info();
+            throw new NotImplementedException();
+            //return LiteDatabase.Pragma();
         }
 
         public void BeforeDispose()
@@ -200,7 +201,7 @@ namespace LiteDbExplorer.Core
                 }
                 catch (LiteException e)
                 {
-                    if (e.ErrorCode == LiteException.DATABASE_WRONG_PASSWORD || e.Message.Contains("password"))
+                    if (e.Message.Contains("password"))
                     {
                         return true;
                     }
@@ -271,15 +272,7 @@ namespace LiteDbExplorer.Core
             }
         }
 
-        private Logger GetLogger()
-        {
-            if (_enableLog)
-            {
-                return new Logger(Logger.FULL, log => { Log.ForContext("DatabaseName", Name).Information(log); });
-            }
-
-            return null;
-        }
+        
 
         private void UpdateCollections()
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiteDB;
 
@@ -10,7 +11,7 @@ namespace LiteDbExplorer.Core
         {
         }
 
-        protected override IEnumerable<DocumentReference> GetAllItem(LiteCollection<BsonDocument> liteCollection)
+        protected override IEnumerable<DocumentReference> GetAllItem(ILiteCollection<BsonDocument> liteCollection)
         {
             return LiteCollection.FindAll().Select(bsonDocument => new FileDocumentReference(bsonDocument, this));
         }
@@ -23,10 +24,11 @@ namespace LiteDbExplorer.Core
 
         public DocumentReference AddFile(string id, string path)
         {
-            var file = Database.LiteDatabase.FileStorage.Upload(id, path);
-            var newDoc = new DocumentReference(file.AsDocument, this);
-            Items.Add(newDoc);
-            return newDoc;
+            throw new NotImplementedException();
+            //var file = Database.LiteDatabase.FileStorage.Upload(id, path);
+            //var newDoc = new DocumentReference(file..AsDocument, this);
+            //Items.Add(newDoc);
+            //return newDoc;
         }
 
         public void SaveFile(DocumentReference document, string path)
@@ -35,9 +37,10 @@ namespace LiteDbExplorer.Core
             file.SaveAs(path);
         }
 
-        public LiteFileInfo GetFileObject(DocumentReference document)
+        public LiteFileInfo<object> GetFileObject(DocumentReference document)
         {
-            return Database.LiteDatabase.FileStorage.FindById(document.LiteDocument["_id"]);
+            throw new NotImplementedException();
+            //return Database.LiteDatabase.FileStorage.FindById(document.LiteDocument["_id"]);
         }
     }
 }

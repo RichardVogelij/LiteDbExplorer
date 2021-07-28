@@ -29,12 +29,12 @@ namespace LiteDbExplorer.Core
 
         public string Serialize(bool pretty = false, bool writeBinary = true)
         {
-            return JsonSerializer.Serialize(Value, pretty, writeBinary);
+            return JsonSerializer.Serialize(Value);
         }
 
         public void Serialize(TextWriter writer, bool pretty = false, bool writeBinary = true)
         {
-            JsonSerializer.Serialize(Value, writer, pretty, writeBinary);
+            JsonSerializer.Serialize(Value, writer);
         }
     }
 }

@@ -84,7 +84,7 @@ namespace LiteDbExplorer.Modules
 
             using (var stream = new FileStream(maybeFileName.Value, System.IO.FileMode.Create))
             {
-                LiteEngine.CreateDatabase(stream);
+                //LiteEngine.CreateDatabase(stream);
             }
 
             await OpenDatabase(maybeFileName.Value).ConfigureAwait(false);
@@ -191,7 +191,7 @@ namespace LiteDbExplorer.Modules
 
         protected virtual async Task OpenDatabaseExceptionHandler(LiteException liteException, string path, string password = "")
         {
-            if (liteException.ErrorCode == LiteException.DATABASE_WRONG_PASSWORD)
+            if (false)
             {
                 if (!string.IsNullOrEmpty(password))
                 {

@@ -56,7 +56,7 @@ namespace LiteDbExplorer.Modules.DbDocument
             }
         }
         
-        public LiteFileInfo FileInfo { get; private set; }
+        public LiteFileInfo<object> FileInfo { get; private set; }
 
         public bool IsDocumentView { get; private set; }
 
